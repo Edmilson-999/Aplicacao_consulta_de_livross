@@ -47,7 +47,7 @@ API RESTful desenvolvida com **Node.js**, **Express** e **Sequelize** para geren
 
 2. **Instale as dependências**
    ```bash
-   npm ins
+   npm install
    npm install express
    ```
 
