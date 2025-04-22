@@ -1,6 +1,5 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes, Sequelize } = require('sequelize');
 const sequelize = require('../Config/database');
-const BooK = require('./Book');
 
 
 const Author = sequelize.define('Author', {
@@ -11,7 +10,7 @@ const Author = sequelize.define('Author', {
     },
 
     name: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
         allowNull: false
     },
 

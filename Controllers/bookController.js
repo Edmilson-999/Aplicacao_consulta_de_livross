@@ -1,12 +1,8 @@
-const { where, json } = require('../Config/database');
-const sequelize = require('../Config/database');
-const { Op } = require('sequelize');
 const express = require('express');
-const router = express.Router();
 const { Author, BooK } = require('../Models');
 
 
-exports.createBook = async (req, res) => {
+const createBook = async (req, res) => {
     try {
         const { title, authorId } = req.body;
         const book = await BooK.create({ title, authorId });
@@ -16,7 +12,7 @@ exports.createBook = async (req, res) => {
     }
 }
 
-exports.getBooksByTitle = async (req, res) => {
+const getBooksByTitle = async (req, res) => {
     try {
         const title = req.params.title;
         const books = await BooK.findAll({
@@ -31,39 +27,36 @@ exports.getBooksByTitle = async (req, res) => {
             return res.status(404).json({ error: 'Book not found' });
         }
         res.json(books);
-    }
-    catch (error) {
+    } catch (error) {
         res.status(500).json({ error: error.message })
     }
 }
 
-
-exports.getAllBooks = async (req, res) => {
+const getAllBooks = async (req, res) => {
     try {
         const books = await BooK.findAll({
             include: [Author]
         });
         res.json(books);
-    } catch(err) {
+    } catch(error) {
         res.status(500).json({ error: error.message })
     }
-};
+}
 
-
-exports.getBooksByAuthor = async (req, res) => {
+const getBooksByAuthor = async (req, res) => {
     try {
-        const AuthorId = req.params.AuthorId;
-        const books = await books.findAll({
+        const authorId = req.params.AuthorId; // Corrigi para usar authorId consistente
+        const books = await BooK.findAll({ // Corrigi de 'books' para 'BooK'
             where: { authorId },
             include: [Author]    
         })
         res.json(books);
     } catch (error) {
-        res.status(500).json({ err: error.message })
+        res.status(500).json({ error: error.message }) // Corrigi de 'err' para 'error'
     }
 }
 
-exports.getBookById = async (req, res) => {
+const getBookById = async (req, res) => {
     try {
         const bookId = req.params.id;
         const book = await BooK.findByPk(bookId, {
@@ -78,7 +71,7 @@ exports.getBookById = async (req, res) => {
     }
 }
 
-exports.updateBook = async (req, res) => {
+const updateBook = async (req, res) => {
     try {
         const bookId = req.params.id;
         const { title, authorId } = req.body;
@@ -95,5 +88,11 @@ exports.updateBook = async (req, res) => {
     }
 }
 
-module.exports = bookController;
-
+module.exports = {
+    createBook,
+    getBookById,
+    getBooksByTitle,
+    updateBook,
+    getAllBooks,
+    getBooksByAuthor
+};

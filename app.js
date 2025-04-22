@@ -1,21 +1,19 @@
 const express = require('express');
 const sequelize = require('./Config/database');
-const { Author, Book } = require('./Models');
 const booksRoutes = require('./Routes/bookRoutes');
 const authorRoutes = require('./Routes/authorRoutes');
-const { where, json } = require('./Config/database');
-const bookController = require('./Controllers/bookController');
-const { createAuthor, getAllAuthors, getAuthorById } = require('./Controllers/authorController');
-const { Op } = require('sequelize');
-
 const app = express();
+const swaggerSetup = require('./swagger');
 
-// Middlewares
+
+// Middlewares  
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/Books', booksRoutes);
 app.use('/Authors', authorRoutes);
+
+swaggerSetup(app);
 
 sequelize.sync({ force: false })
     .then(() => {

@@ -1,24 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const bookController = require('./Controllers/bookController');
-const { Book } = require('../Models');
-const { Author } = require('../Models');
-const sequelize = require('../Config/database');
-const { Op } = require('sequelize');
-const { where, json } = require('../Config/database');
+const { createBook, getBookById, getBooksByTitle, updateBook, getAllBooks, getBooksByAuthor } = require ('../Controllers/bookController');
 
+router.get('/', getAllBooks);
 
-router.get('/', bookController.getAllBooks);
+router.get('/:id', getBookById);
 
-router.get('/:id', bookController.getBookById);
+router.get('/title/:title', getBooksByTitle);
 
-router.get('/title/:title', bookController.getBooksByTitle);
+router.get('/author/:authorId', getBooksByAuthor);
 
-router.get('/author/:authorId', bookController.getBooksByAuthor);
+router.post('/', createBook);
 
-router.post('/', bookController.createBook);
-
-router.put('/:id', bookController.updateBook);
+router.put('/:id', updateBook);
 
 
 module.exports = router;

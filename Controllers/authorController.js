@@ -1,12 +1,7 @@
 const { Author, BooK } = require('../Models');
-const sequelize = require('../Config/database');
-const { Op } = require('sequelize');
-const express = require('express');
-const router = express.Router();
-const { where, json } = require('../Config/database');
 
 
-exports.getAllAuthors = async (req, res) => {
+const getAllAuthors = async (req, res) => {
     try {
         const authors = await Author.findAll({
             include: [Author]
@@ -17,7 +12,7 @@ exports.getAllAuthors = async (req, res) => {
     }
 };
 
-exports.getBooksByAuthor = async (req, res) => {
+const getBooksByAuthor = async (req, res) => {
     try {
         const authorId = req.params.authorId;
         const books = await BooK.findAll({
@@ -33,7 +28,7 @@ exports.getBooksByAuthor = async (req, res) => {
     }
 }
 
-exports.getAuthorById = async (req, res) => {
+const getAuthorById = async (req, res) => {
     try {
         const authorId = req.params.id;
         const author = await Author.findByPk(authorId, {
@@ -48,7 +43,7 @@ exports.getAuthorById = async (req, res) => {
     }
 }
 
-exports.createAuthor = async (req, res) => {
+const createAuthor = async (req, res) => {
     try {
         const { name } = req.body;
         const author = await Author.create({ name });

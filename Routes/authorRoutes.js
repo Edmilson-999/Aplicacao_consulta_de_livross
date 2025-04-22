@@ -1,21 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const bookController = require('./Controllers/bookController');
-const { Book } = require('../Models');
-const { Author } = require('../Models');
-const sequelize = require('../Config/database');
-const { Op } = require('sequelize');
-const { where, json } = require('../Config/database');
+const { getAllAuthors, createAuthor, getAuthorById, getBooksByAuthor } = require('../Controllers/authorController');
 
 
-router.get('/', bookController.getAllBooks);
+router.get('/', getAllAuthors);
 
-router.get('/:id', bookController.getBookById);
+router.get('/:id', getAuthorById);
 
-router.get('/title/:title', bookController.getBooksByTitle);
+router.get('/:authorId/books', getBooksByAuthor);
 
-router.get('/author/:authorId', bookController.getBooksByAuthor);
-
-router.post('/', bookController.createBook);
+router.post('/', createAuthor);
 
 module.exports = router;
